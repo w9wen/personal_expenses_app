@@ -26,13 +26,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
   final List<Transaction> transactions = [
     Transaction(
       id: "t1",
@@ -57,7 +56,11 @@ class MyHomePage extends StatelessWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+  // String titleInput;
+  // String amountInput;
+
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -83,16 +86,24 @@ class MyHomePage extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: const <Widget>[
+                children: <Widget>[
                   TextField(
                     decoration: InputDecoration(labelText: "Title"),
+                    controller: titleController,
+                    // onChanged: (text) {
+                    //   titleInput = text;
+                    // },
                   ),
                   TextField(
                     decoration: InputDecoration(labelText: "Amount"),
+                    controller: amountController,
+                    // onChanged: (text) => amountInput = text,
                   ),
                   FlatButton(
-                    onPressed: null,
-                    child: Text(
+                    onPressed: () {
+                      print(titleController.text);
+                    },
+                    child: const Text(
                       "Add Transaction",
                       style: TextStyle(
                         color: Colors.purple,
