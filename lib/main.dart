@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expenses_app/widgets/user_transaction.dart';
+import 'package:personal_expenses_app/widgets/new_transaction.dart';
+import 'package:personal_expenses_app/widgets/transaction_list.dart';
+import 'models/transaction.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,21 +32,55 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  final List<Transaction> _userTransactionList = [
+    Transaction(
+      id: "t1",
+      title: "New Shoes",
+      amount: 69.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: "t2",
+      title: "Weekly Groceries",
+      amount: 16.53,
+      date: DateTime.now(),
+    ),
+  ];
 
-  // String titleInput;
-  // String amountInput;
+  void _addNewTransaction(String txTitle, double txtAmount) {
+    final now = DateTime.now();
+    final newTx = Transaction(
+      title: txTitle,
+      amount: txtAmount,
+      id: now.toString(),
+      date: now,
+    );
 
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+    setState(() {
+      _userTransactionList.add(newTx);
+    });
+  }
+
+  void _startAddNewTransaction(BuildContext buildContext) {
+    showModalBottomSheet(
+      context: buildContext,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewTransaction(_addNewTransaction),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +89,8 @@ class MyHomePage extends StatelessWidget {
         title: const Text("Flutter App"),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
+            onPressed: () => _startAddNewTransaction(context),
           )
         ],
       ),
@@ -71,14 +107,14 @@ class MyHomePage extends StatelessWidget {
                 elevation: 5,
               ),
             ),
-            UserTransactions(),
+            TransactionList(_userTransactionList),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => _startAddNewTransaction(context),
       ),
     );
   }
