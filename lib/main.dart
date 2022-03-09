@@ -29,20 +29,25 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amber,
         fontFamily: "Quicksand",
         textTheme: ThemeData.light().textTheme.copyWith(
-              titleMedium: TextStyle(
+              titleMedium: const TextStyle(
                 fontFamily: "OpenSans",
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
             ),
-        appBarTheme: AppBarTheme(
-          textTheme: ThemeData.light().textTheme.copyWith(
-                headline6: const TextStyle(
-                  fontFamily: "OpenSans",
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontFamily: "OpenSans",
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          // textTheme: ThemeData.light().textTheme.copyWith(
+          //       headline6: const TextStyle(
+          //         fontFamily: "OpenSans",
+          //         fontSize: 20,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
         ),
       ),
       home: MyHomePage(),
